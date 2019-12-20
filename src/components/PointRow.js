@@ -4,6 +4,7 @@ const PointRow = props => {
     const point = props.point;
 
     return (
+        <tbody>
         <tr>
             <td>{point.id}</td>
             <td>{point.x}</td>
@@ -11,6 +12,7 @@ const PointRow = props => {
             <td>{point.r}</td>
             <td>{point.result ? 'true' : 'false'}</td>
         </tr>
+        </tbody>
     );
 };
 

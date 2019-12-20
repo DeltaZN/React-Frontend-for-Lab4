@@ -2,19 +2,20 @@ import React from 'react';
 import ListErrors from '../ListErrors';
 import agent from '../../agent';
 import { connect } from 'react-redux';
+import {POINT_ADDED, UPDATE_FIELD_POINT} from "../../constants/actionTypes";
 
 const mapStateToProps = state => ({ ...state.home });
 
 
 const mapDispatchToProps = dispatch => ({
     onChangeX: value =>
-        dispatch({ type: 'UPDATE_FIELD_POINT', key: 'xc', value }),
+        dispatch({ type: UPDATE_FIELD_POINT, key: 'xc', value }),
     onChangeY: value =>
-        dispatch({ type: 'UPDATE_FIELD_POINT', key: 'yc', value }),
+        dispatch({ type: UPDATE_FIELD_POINT, key: 'yc', value }),
     onChangeR: value =>
-        dispatch({ type: 'UPDATE_FIELD_POINT', key: 'rc', value }),
+        dispatch({ type: UPDATE_FIELD_POINT, key: 'rc', value }),
     onSubmit: (x, y, r) => {
-        dispatch({ type: 'POINT_ADDED', payload: agent.Points.new(x, y, r), r: r})
+        dispatch({ type: POINT_ADDED, payload: agent.Points.new(x, y, r), r: r})
     }
 });
 

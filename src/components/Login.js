@@ -3,18 +3,17 @@ import ListErrors from './ListErrors';
 import React from 'react';
 import agent from '../agent';
 import { connect } from 'react-redux';
+import {LOGIN, UPDATE_FIELD_AUTH} from "../constants/actionTypes";
 
 const mapStateToProps = state => ({ ...state.auth });
 
 const mapDispatchToProps = dispatch => ({
     onChangeUsername: value =>
-        dispatch({ type: 'UPDATE_FIELD_AUTH', key: 'username', value }),
+        dispatch({ type: UPDATE_FIELD_AUTH, key: 'username', value }),
     onChangePassword: value =>
-        dispatch({ type: 'UPDATE_FIELD_AUTH', key: 'password', value }),
+        dispatch({ type: UPDATE_FIELD_AUTH, key: 'password', value }),
     onSubmit: (username, password) =>
-        dispatch({ type: 'LOGIN', payload: agent.Auth.login(username, password), username: username }),
-    onUnload: () =>
-        dispatch({ type: 'LOGIN_PAGE_UNLOADED' })
+        dispatch({ type: LOGIN, payload: agent.Auth.login(username, password), username: username })
 });
 
 class Login extends React.Component {
@@ -27,10 +26,6 @@ class Login extends React.Component {
             ev.preventDefault();
             this.props.onSubmit(username, password);
         };
-    }
-
-    componentWillUnmount() {
-        this.props.onUnload();
     }
 
     render() {

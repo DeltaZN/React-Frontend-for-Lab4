@@ -1,4 +1,10 @@
 import agent from './agent';
+import {
+    POINT_ADDED,
+    POINTS_LOADED,
+    LOGIN,
+    LOGOUT
+} from './constants/actionTypes';
 
 const promiseMiddleware = store => next => action => {
     if (isPromise(action.payload)) {
@@ -25,33 +31,47 @@ function isPromise(v) {
     return v && typeof v.then === 'function';
 }
 
-const localStorageMiddleware = store => next => action => {
-    if (action.type === 'POINTS_LOADED') {
-        if (action.error) {
+const pointsMiddleware = store => next => action => {
+
+    switch (action.type) {
+        case POINTS_LOADED:
+            if (action.error) {
+                window.localStorage.removeItem('token');
+                window.localStorage.removeItem('username');
+                agent.setToken(null);
+            }
+            break;
+        case POINT_ADDED:
+            if (!action.error) {
+                store.dispatch({ type: 'POINTS_LOADED', payload: agent.Points.all() });
+                store.dispatch({ type: 'POINTS_RECALCULATED', payload: agent.Points.recalculated(action.r), r: action.r});
+            }
+            break;
+        default:
+            break;
+    }
+
+    next(action);
+};
+
+
+const authMiddleware = store => next => action => {
+
+    switch (action.type) {
+        case LOGIN:
+            if (!action.error) {
+                window.localStorage.setItem('token', action.payload.message);
+                window.localStorage.setItem('username', action.username);
+                agent.setToken(action.payload.message);
+            }
+            break;
+        case LOGOUT:
             window.localStorage.removeItem('token');
             window.localStorage.removeItem('username');
             agent.setToken(null);
-        }
-    }
-
-    if (action.type === 'POINT_ADDED') {
-        if (!action.error) {
-            store.dispatch({ type: 'POINTS_LOADED', payload: agent.Points.all() });
-            store.dispatch({ type: 'POINTS_RECALCULATED', payload: agent.Points.recalculated(action.r), r: action.r});
-        }
-    }
-
-    if (action.type === 'LOGIN') {
-        if (!action.error) {
-            window.localStorage.setItem('token', action.payload.message);
-            window.localStorage.setItem('username', action.username);
-            agent.setToken(action.payload.message);
-        }
-    } else if (action.type === 'LOGOUT') {
-        console.log('second test');
-        window.localStorage.removeItem('token');
-        window.localStorage.removeItem('username');
-        agent.setToken(null);
+            break;
+        default:
+            break;
     }
 
     next(action);
@@ -59,6 +79,7 @@ const localStorageMiddleware = store => next => action => {
 
 
 export {
-    localStorageMiddleware,
+    authMiddleware,
+    pointsMiddleware,
     promiseMiddleware
 };

@@ -2,6 +2,7 @@ import Header from './Header';
 import React from 'react';
 import agent from '../agent';
 import { connect } from 'react-redux';
+import {APP_LOAD, REDIRECT} from "../constants/actionTypes";
 
 const mapStateToProps = state => ({
     appName: state.common.appName,
@@ -12,9 +13,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     onLoad: (username, token) =>
-        dispatch({ type: 'APP_LOAD',    username, token }),
+        dispatch({ type: APP_LOAD,    username, token }),
     onRedirect: () =>
-        dispatch({ type: 'REDIRECT' })
+        dispatch({ type: REDIRECT })
 });
 
 class App extends React.Component {

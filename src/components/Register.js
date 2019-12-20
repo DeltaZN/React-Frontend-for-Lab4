@@ -3,20 +3,19 @@ import ListErrors from './ListErrors';
 import React from 'react';
 import agent from '../agent';
 import { connect } from 'react-redux';
+import {REGISTER, UPDATE_FIELD_AUTH} from "../constants/actionTypes";
 
 const mapStateToProps = state => ({ ...state.auth });
 
 const mapDispatchToProps = dispatch => ({
     onChangePassword: value =>
-        dispatch({ type: 'UPDATE_FIELD_AUTH', key: 'password', value }),
+        dispatch({ type: UPDATE_FIELD_AUTH, key: 'password', value }),
     onChangeUsername: value =>
-        dispatch({ type: 'UPDATE_FIELD_AUTH', key: 'username', value }),
+        dispatch({ type: UPDATE_FIELD_AUTH, key: 'username', value }),
     onSubmit: (username, password) => {
         const payload = agent.Auth.register(username, password);
-        dispatch({ type: 'REGISTER', payload })
-    },
-    onUnload: () =>
-        dispatch({ type: 'REGISTER_PAGE_UNLOADED' })
+        dispatch({ type: REGISTER, payload })
+    }
 });
 
 class Register extends React.Component {
@@ -28,10 +27,6 @@ class Register extends React.Component {
             ev.preventDefault();
             this.props.onSubmit(username, password);
         }
-    }
-
-    componentWillUnmount() {
-        this.props.onUnload();
     }
 
     render() {
@@ -78,7 +73,7 @@ class Register extends React.Component {
                                         className="btn btn-lg btn-primary pull-xs-right"
                                         type="submit"
                                         disabled={this.props.inProgress}>
-                                        Sign in
+                                        Sign up
                                     </button>
 
                                 </fieldset>

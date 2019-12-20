@@ -1,3 +1,11 @@
+import {
+    LOGIN,
+    REGISTER,
+    LOGOUT,
+    REDIRECT,
+    APP_LOAD
+} from '../constants/actionTypes';
+
 const defaultState = {
     appName: 'Lab4-Web',
     token: null
@@ -5,28 +13,29 @@ const defaultState = {
 
 export default (state = defaultState, action) => {
     switch (action.type) {
-        case 'APP_LOAD':
+        case APP_LOAD:
             return {
                 ...state,
                 token: action.token || null,
                 appLoaded: true,
                 currentUser: action.username || null
             };
-        case 'REDIRECT':
+        case REDIRECT:
             return { ...state, redirectTo: null };
-        case 'LOGOUT':
+        case LOGOUT:
             return { ...state, redirectTo: '/', token: null, currentUser: null };
-        case 'LOGIN':
+        case LOGIN:
             return {
                 ...state,
                 redirectTo: action.error ? null : '/',
-                currentUser: action.username || null
+                currentUser: action.error ? null : action.username
             };
-        case 'REGISTER':
+        case REGISTER:
             return {
                 ...state,
                 redirectTo: action.error ? null : '/login'
             };
+        default:
+            return state;
     }
-    return state;
 };

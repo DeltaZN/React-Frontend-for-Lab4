@@ -4,8 +4,7 @@ import agent from '../../agent';
 import { connect } from 'react-redux';
 import PointInput from "./PointInput";
 import Graphic from "./Graphic";
-
-const Promise = global.Promise;
+import { POINTS_LOADED } from "../../constants/actionTypes";
 
 const mapStateToProps = state => ({
     appName: state.common.appName,
@@ -14,9 +13,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     onLoad: (payload) =>
-        dispatch({ type: 'POINTS_LOADED', payload }),
-    onUnload: () =>
-        dispatch({ type: 'HOME_PAGE_UNLOADED' })
+        dispatch({ type: POINTS_LOADED, payload }),
 });
 
 class Home extends React.Component {
@@ -25,10 +22,6 @@ class Home extends React.Component {
     componentWillMount() {
         if (this.props.currentUser)
             this.props.onLoad(agent.Points.all());
-    }
-
-    componentWillUnmount() {
-        this.props.onUnload();
     }
 
     render() {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import PointsList from "../PointsList";
 import agent from "../../agent";
+import {POINT_ADDED, POINTS_RECALCULATED} from "../../constants/actionTypes";
 
 const mapStateToProps = state => ({
     points: state.home.points_r,
@@ -12,10 +12,10 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     recalculatedPoints: (r) => {
-        dispatch({ type: 'POINTS_RECALCULATED', payload: agent.Points.recalculated(r), r: r})
+        dispatch({ type: POINTS_RECALCULATED, payload: agent.Points.recalculated(r), r: r})
     },
     onCanvasClick: (x, y, r) => {
-        dispatch({ type: 'POINT_ADDED', payload: agent.Points.new(x, y, r), r: r})
+        dispatch({ type: POINT_ADDED, payload: agent.Points.new(x, y, r), r: r})
     }
 });
 
@@ -47,8 +47,7 @@ class Graphic extends React.Component {
     componentWillReceiveProps(nextProps){
         if (nextProps.rc) {
             this.drawGraphic(nextProps.rc);
-            console.log(`current = ${nextProps.current_r}`);
-            if (!nextProps.current_r || nextProps.current_r != nextProps.rc)
+            if (!nextProps.current_r || nextProps.current_r !== nextProps.rc)
                 this.props.recalculatedPoints(nextProps.rc);
         }
         if (nextProps.points) {
@@ -58,7 +57,7 @@ class Graphic extends React.Component {
 
     drawPoint(point) {
 
-        let x = point.x, y = point.y, r = point.r, hit = point.result;
+        let x = point.x, y = point.y, hit = point.result;
 
         // console.log('Marking point ' + x + ', ' + y + ', ' + hit);
 

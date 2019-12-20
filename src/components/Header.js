@@ -1,9 +1,8 @@
-'use strict';
-
 import { Link } from 'react-router';
 import React from 'react';
 import agent from "../agent";
 import {connect} from "react-redux";
+import {LOGOUT} from "../constants/actionTypes";
 
 const LoggedOutView = props => {
     if (!props.currentUser) {
@@ -57,15 +56,11 @@ const LoggedInView = props => {
 
 const mapDispatchToProps = dispatch => ({
     onClickLogout: () => {
-        dispatch({ type: 'LOGOUT', payload: agent.Auth.logout() })
+        dispatch({ type: LOGOUT, payload: agent.Auth.logout() })
     },
 });
 
 class Header extends React.Component {
-
-    constructor() {
-        super();
-    }
 
     render() {
         return (

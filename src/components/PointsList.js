@@ -20,6 +20,7 @@ const PointsList = props => {
         return (
             <div>
                 <table>
+                    <tbody>
                     <tr>
                         <th>Id</th>
                         <th>X</th>
@@ -27,6 +28,7 @@ const PointsList = props => {
                         <th>R</th>
                         <th>HIT</th>
                     </tr>
+                    </tbody>
 
                 {
                     props.points.map(point => {
