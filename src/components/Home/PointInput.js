@@ -4,7 +4,7 @@ import agent from '../../agent';
 import { connect } from 'react-redux';
 import {POINT_ADDED, UPDATE_FIELD_POINT} from "../../constants/actionTypes";
 
-const mapStateToProps = state => ({ ...state.home });
+const mapStateToProps = state => ({ ...state.points });
 
 
 const mapDispatchToProps = dispatch => ({
@@ -15,25 +15,22 @@ const mapDispatchToProps = dispatch => ({
     onChangeR: value =>
         dispatch({ type: UPDATE_FIELD_POINT, key: 'rc', value }),
     onSubmit: (x, y, r) => {
-        dispatch({ type: POINT_ADDED, payload: agent.Points.new(x, y, r), r: r})
+        dispatch({ type: POINT_ADDED, payload: agent.Points.new(x, y, r), r})
     }
 });
 
 class PointInput extends React.Component {
-    constructor() {
-        super();
-        this.changeX = ev => this.props.onChangeX(ev.target.value);
-        this.changeY = ev => this.props.onChangeY(ev.target.value);
-        this.changeR = ev => this.props.onChangeR(ev.target.value);
 
-        this.submitForm = (x, y, r) => ev => {
-            ev.preventDefault();
-            this.props.onSubmit(x, y, r);
-        };
-    }
+    changeX = ev => this.props.onChangeX(ev.target.value);
 
-    componentWillReceiveProps(nextProps){
-    }
+    changeY = ev => this.props.onChangeY(ev.target.value);
+
+    changeR = ev => this.props.onChangeR(ev.target.value);
+
+    submitForm = (x, y, r) => ev => {
+        ev.preventDefault();
+        this.props.onSubmit(x, y, r);
+    };
 
     render() {
         const x = this.props.xc;

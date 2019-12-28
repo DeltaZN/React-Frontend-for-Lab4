@@ -34,11 +34,7 @@ const LoggedInView = props => {
             <ul className="nav navbar-nav pull-xs-right">
 
                 <li className="nav-item">
-                    <Link
-                        to={`@${props.currentUser}`}
-                        className="nav-link">
                         {props.currentUser}
-                    </Link>
                 </li>
 
                 <li className="nav-item">

@@ -4,27 +4,23 @@ import agent from "../../agent";
 import {POINT_ADDED, POINTS_RECALCULATED} from "../../constants/actionTypes";
 
 const mapStateToProps = state => ({
-    points: state.home.points_r,
-    all: state.home,
-    rc: state.home.rc,
-    current_r: state.home.current_r
+    points: state.points.points_r,
+    rc: state.points.rc,
+    current_r: state.points.current_r
 });
 
 const mapDispatchToProps = dispatch => ({
     recalculatedPoints: (r) => {
-        dispatch({ type: POINTS_RECALCULATED, payload: agent.Points.recalculated(r), r: r})
+        dispatch({ type: POINTS_RECALCULATED, payload: agent.Points.recalculated(r), r})
     },
     onCanvasClick: (x, y, r) => {
-        dispatch({ type: POINT_ADDED, payload: agent.Points.new(x, y, r), r: r})
+        dispatch({ type: POINT_ADDED, payload: agent.Points.new(x, y, r), r})
     }
 });
 
 class Graphic extends React.Component {
 
-    constructor(props) {
-        super(props);
-        this.addPointFromCanvas = this.addPointFromCanvas.bind(this);
-    }
+    addPointFromCanvas = this.addPointFromCanvas.bind(this);
 
 
     componentWillMount() {

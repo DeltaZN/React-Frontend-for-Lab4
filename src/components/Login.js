@@ -13,20 +13,19 @@ const mapDispatchToProps = dispatch => ({
     onChangePassword: value =>
         dispatch({ type: UPDATE_FIELD_AUTH, key: 'password', value }),
     onSubmit: (username, password) =>
-        dispatch({ type: LOGIN, payload: agent.Auth.login(username, password), username: username })
+        dispatch({ type: LOGIN, payload: agent.Auth.login(username, password), username })
 });
 
 class Login extends React.Component {
-    constructor() {
-        super();
-        this.changeUsername = ev => this.props.onChangeUsername(ev.target.value);
-        this.changePassword = ev => this.props.onChangePassword(ev.target.value);
 
-        this.submitForm = (username, password) => ev => {
-            ev.preventDefault();
-            this.props.onSubmit(username, password);
-        };
-    }
+    changeUsername = ev => this.props.onChangeUsername(ev.target.value);
+
+    changePassword = ev => this.props.onChangePassword(ev.target.value);
+
+    submitForm = (username, password) => ev => {
+        ev.preventDefault();
+        this.props.onSubmit(username, password);
+    };
 
     render() {
         const username = this.props.username;

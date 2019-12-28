@@ -7,13 +7,13 @@ import {APP_LOAD, REDIRECT} from "../constants/actionTypes";
 const mapStateToProps = state => ({
     appName: state.common.appName,
     currentUser: state.common.currentUser,
-    points: state.home.points,
+    points: state.points.points,
     redirectTo: state.common.redirectTo
 });
 
 const mapDispatchToProps = dispatch => ({
     onLoad: (username, token) =>
-        dispatch({ type: APP_LOAD,    username, token }),
+        dispatch({ type: APP_LOAD, username, token }),
     onRedirect: () =>
         dispatch({ type: REDIRECT })
 });

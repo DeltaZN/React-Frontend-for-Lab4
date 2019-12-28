@@ -15,7 +15,7 @@ export default (state = {}, action) => {
                 errors: action.error ? action.payload.message : null
             };
         case ASYNC_START:
-            if (action.subtype === 'LOGIN' || action.subtype === 'REGISTER') {
+            if (action.subtype === LOGIN || action.subtype === REGISTER) {
                 return { ...state, inProgress: true };
             }
             return state;

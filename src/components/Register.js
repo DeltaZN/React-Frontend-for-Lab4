@@ -19,15 +19,15 @@ const mapDispatchToProps = dispatch => ({
 });
 
 class Register extends React.Component {
-    constructor() {
-        super();
-        this.changePassword = ev => this.props.onChangePassword(ev.target.value);
-        this.changeUsername = ev => this.props.onChangeUsername(ev.target.value);
-        this.submitForm = (username, password) => ev => {
-            ev.preventDefault();
-            this.props.onSubmit(username, password);
-        }
-    }
+
+    changePassword = ev => this.props.onChangePassword(ev.target.value);
+
+    changeUsername = ev => this.props.onChangeUsername(ev.target.value);
+
+    submitForm = (username, password) => ev => {
+        ev.preventDefault();
+        this.props.onSubmit(username, password);
+    };
 
     render() {
         const password = this.props.password;

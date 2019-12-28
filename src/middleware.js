@@ -3,12 +3,13 @@ import {
     POINT_ADDED,
     POINTS_LOADED,
     LOGIN,
-    LOGOUT
+    LOGOUT,
+    ASYNC_START, POINTS_RECALCULATED
 } from './constants/actionTypes';
 
 const promiseMiddleware = store => next => action => {
     if (isPromise(action.payload)) {
-        store.dispatch({ type: 'ASYNC_START', subtype: action.type });
+        store.dispatch({ type: ASYNC_START, subtype: action.type });
         action.payload.then(
             res => {
                 action.payload = res;
@@ -43,8 +44,8 @@ const pointsMiddleware = store => next => action => {
             break;
         case POINT_ADDED:
             if (!action.error) {
-                store.dispatch({ type: 'POINTS_LOADED', payload: agent.Points.all() });
-                store.dispatch({ type: 'POINTS_RECALCULATED', payload: agent.Points.recalculated(action.r), r: action.r});
+                store.dispatch({ type: POINTS_LOADED, payload: agent.Points.all() });
+                store.dispatch({ type: POINTS_RECALCULATED, payload: agent.Points.recalculated(action.r), r: action.r});
             }
             break;
         default:
