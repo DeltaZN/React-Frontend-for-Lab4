@@ -35,8 +35,7 @@ class Graphic extends React.Component {
     render() {
         return (
             <div className="graphic">
-                <canvas width="300" height="300" ref={node => this.graphic = node} onClick={this.addPointFromCanvas}>
-                </canvas>
+                <canvas width="300" height="300" ref={node => this.graphic = node} onClick={this.addPointFromCanvas} />
             </div>
         );
     }
@@ -55,9 +54,6 @@ class Graphic extends React.Component {
     drawPoint(point) {
 
         let x = point.x, y = point.y, hit = point.result;
-
-        // console.log('Marking point ' + x + ', ' + y + ', ' + hit);
-
         let context = this.graphic.getContext("2d");
 
         context.beginPath();
