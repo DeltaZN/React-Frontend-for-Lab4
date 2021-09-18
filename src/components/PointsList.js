@@ -1,47 +1,33 @@
 import React from 'react';
 import PointRow from "./PointRow";
+import {pipe} from "fp-ts/function";
+import {sequenceT} from "fp-ts/Apply";
+import {option as optionInstance} from "fp-ts/Option";
+import {option} from "fp-ts";
 
 const PointsList = props => {
-    if (props.currentUser) {
-        if (!props.points) {
-            return (
-                <div className="points">Loading...</div>
-            );
-        }
-
-        if (props.points.length === 0) {
-            return (
-                <div className="points">
-                    No points are here... yet.
+    pipe(
+        sequenceT(optionInstance)(option.fromNullable(props.currentUser), option.fromNullable(props.points)),
+        option.fold(_ =>
+                (<div className="points">Loading...</div>),
+            ([, points]) => (
+                <div>
+                    <table>
+                        <tbody>
+                        <tr>
+                            <th>Id</th>
+                            <th>X</th>
+                            <th>Y</th>
+                            <th>R</th>
+                            <th>HIT</th>
+                        </tr>
+                        </tbody>
+                        {points.map(point => (<PointRow point={point} key={point.id}/>))}
+                    </table>
                 </div>
-            );
-        }
-
-        return (
-            <div>
-                <table>
-                    <tbody>
-                    <tr>
-                        <th>Id</th>
-                        <th>X</th>
-                        <th>Y</th>
-                        <th>R</th>
-                        <th>HIT</th>
-                    </tr>
-                    </tbody>
-
-                {
-                    props.points.map(point => {
-                        return (
-                            <PointRow point={point} key={point.id}/>
-                        );
-                    })
-                }
-                </table>
-            </div>
-        );
-    } else
-        return null;
+            )
+        )
+    )
 };
 
 export default PointsList;

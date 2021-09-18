@@ -21,11 +21,11 @@ const mapDispatchToProps = dispatch => ({
 
 class PointInput extends React.Component {
 
-    changeX = ev => this.props.onChangeX(ev.target.value);
+    handleXChange = ev => this.props.onChangeX(ev.target.value);
 
-    changeY = ev => this.props.onChangeY(ev.target.value);
+    handleYChange = ev => this.props.onChangeY(ev.target.value);
 
-    changeR = ev => this.props.onChangeR(ev.target.value);
+    handleRadiusChange = ev => this.props.onChangeR(ev.target.value);
 
     submitForm = (x, y, r) => ev => {
         ev.preventDefault();
@@ -55,7 +55,7 @@ class PointInput extends React.Component {
                                             type="text"
                                             placeholder="X"
                                             value={x}
-                                            onChange={this.changeX} />
+                                            onChange={this.handleXChange} />
                                     </fieldset>
 
                                     <fieldset className="form-group">
@@ -64,7 +64,7 @@ class PointInput extends React.Component {
                                             type="text"
                                             placeholder="Y"
                                             value={y}
-                                            onChange={this.changeY} />
+                                            onChange={this.handleYChange} />
                                     </fieldset>
 
                                     <fieldset className="form-group">
@@ -73,7 +73,7 @@ class PointInput extends React.Component {
                                             type="text"
                                             placeholder="R"
                                             value={r}
-                                            onChange={this.changeR} />
+                                            onChange={this.handleRadiusChange} />
                                     </fieldset>
 
                                     <button
